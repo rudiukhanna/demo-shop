@@ -1,0 +1,35 @@
+@import 'variables';
+
+
+
+.grid {
+    display: grid;
+    margin-left: .5px;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 0.5em;
+}
+
+.header {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--btn-color);
+
+    &_title {
+        color: var(--tertiary-color);
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+    }
+
+    &_btn {
+        background-color: var(--primary-color);
+        border-radius: 5px;
+        border: none;
+        padding: 6px 15px;
+    }
+}
