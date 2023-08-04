@@ -1,4 +1,5 @@
 import Card from "./Card";
+import Cart from "./Cart";
 import { useState, useEffect } from "react";
 import './styles/styles.css';
 import Header from "./Header";
@@ -8,6 +9,28 @@ const URL = 'https://dummyjson.com/products';
 function App() {
 
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  useEffect(() => {
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(savedCartItems);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const removeFromCart = (item) => {
+    setCartItems((prevItems) => prevItems.filter(product => item.id !== product.id));
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
 
 
   useEffect(() => {
@@ -31,6 +54,8 @@ function App() {
                 <Card 
                      key={product.id} {...product}
                      products={products}
+                     id={product.id}
+                     addToCart={addToCart}
                      />)}
               </div>
             </div>
@@ -38,6 +63,8 @@ function App() {
         </div>
       </div>
     </div>
+
+    <Cart cartItems={cartItems} removeFromCart={removeFromCart} clearCart={clearCart} />
     </>
   );
 
